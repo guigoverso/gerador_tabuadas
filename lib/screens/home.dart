@@ -29,11 +29,23 @@ class Home extends StatelessWidget {
                     children: <Widget>[
                   ButtonMenu(
                       text: 'Gerar tabuada',
-                      action: () => Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => Tabuada()))),
-                  ButtonMenu(
-                      text: 'Exercícios', action: () => print('Clicked 2'))
-                ]))
+                      action: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Tabuada()))),
+                  Builder(
+                    builder: (context) => ButtonMenu(
+                      text: 'Exercícios',
+                      disabled: true,
+                      action: () => Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Em breve...')
+                        )
+                      )
+                    ),
+                  ),
+                  
+                ])),
+                Text('Criado por Guilherme de O. C. Corona', textAlign: TextAlign.center,style: TextStyle(color: Colors.black38, fontSize: 12.0)),
+                Text('Disponível em: https://github.com/guigoverso/gerador_tabuadas', textAlign: TextAlign.center,style: TextStyle(color: Colors.black38, fontSize: 8.0))
           ],
         ),
       ),
@@ -41,7 +53,7 @@ class Home extends StatelessWidget {
   }
 
   Widget ButtonMenu(
-      {@required String text, VoidCallback action, List parameters}) {
+      {@required String text, VoidCallback action, List parameters, bool disabled = false}) {
     return Container(
         width: 150,
         height: 60,
@@ -49,12 +61,14 @@ class Home extends StatelessWidget {
         child: FlatButton(
           onPressed: action == null ? null : action,
           child: Text(text),
-          color: Colors.green,
-          splashColor: Colors.lightGreen,
-          textColor: Colors.white,
+          color: disabled ? Colors.grey : Colors.green,
+          splashColor: disabled ? Colors.grey : Colors.lightGreen,
+          textColor: disabled ? Colors.black45 : Colors.white,
+          disabledColor: Colors.grey,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
         ));
   }
+
 }
